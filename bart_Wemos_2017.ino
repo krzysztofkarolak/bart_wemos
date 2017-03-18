@@ -10,6 +10,8 @@ V1 - tempval2
 #include <SimpleTimer.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <ArduinoOTA.h>
+#include <ESP8266mDNS.h>
 
 #define ONE_WIRE_BUS_PIN 13
 OneWire oneWire(ONE_WIRE_BUS_PIN);
@@ -37,18 +39,26 @@ void setup()
 {
   Serial.begin(115200);
   pinMode(przek1,OUTPUT);
-  digitalWrite(przek1,LOW);
+  digitalWrite(przek1,HIGH);
   sensors.begin();
   sensors.setResolution(wew02, 10);
   sensors.setResolution(zew01, 10);
   Blynk.begin(auth, ssid, pass, "hc.karolak-k.com");
   timer.setInterval(10000L, stx);
+
+    /* ----------- OTA ------------- */
+  ArduinoOTA.setHostname("WemosD1Mini");
+  ArduinoOTA.onStart([]() {
+    Blynk.disconnect();
+  });
+  ArduinoOTA.begin();
   //stx();
 }
 
 void loop()
 {
   Blynk.run();
+  ArduinoOTA.handle();
   timer.run();
 }
 
