@@ -24,8 +24,8 @@ int przek1 = 5;
 float tempval, tempval2;
 char auth[] = "bc0e485e0bfd433084309ae0cb999c3f";
 
-char ssid[] = "_";
-char pass[] = "chuck1234";
+char ssid[] = "x";
+char pass[] = "xxxxx";
 
 void stx() {
   sensors.requestTemperatures();
